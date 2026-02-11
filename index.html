@@ -206,10 +206,12 @@ button:hover {
     <h1>📩 Обратная связь</h1>
 
     <form id="feedbackForm">
-        <input type="text" id="name" placeholder="Ваше имя" required>
-        <textarea id="message" placeholder="Ваше сообщение" required></textarea>
-        <button type="submit">Отправить</button>
-    </form>
+    <input type="text" id="name" placeholder="Ваше имя" required>
+    <input type="email" id="userEmail" placeholder="Ваш email" required>
+    <textarea id="message" placeholder="Ваше сообщение" required></textarea>
+    <button type="submit">Отправить</button>
+</form>
+
 
     <p id="status"></p>
 </div>
@@ -253,3 +255,4 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
 
 </body>
 </html>
+
