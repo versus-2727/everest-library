@@ -217,6 +217,7 @@ button:hover {
 </main>
 
 <script>
+<script>
 function showPage(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -228,21 +229,31 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
     const name = document.getElementById("name").value;
     const message = document.getElementById("message").value;
 
-    fetch(https://formspree.io/f/xojnjpkk, {
+    fetch("https://formspree.io/f/xojnjpkk", {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message })
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ name: name, message: message })
     })
     .then(response => {
-        document.getElementById("status").innerText = "Сообщение отправлено!";
-        this.reset();
+        if (response.ok) {
+            document.getElementById("status").innerText = "Сообщение отправлено!";
+            this.reset();
+        } else {
+            document.getElementById("status").innerText = "Ошибка отправки. Попробуйте ещё раз.";
+        }
     })
     .catch(error => {
-        document.getElementById("status").innerText = "Ошибка отправки";
+        document.getElementById("status").innerText = "Ошибка отправки. Проверьте интернет.";
+        console.error(error);
     });
 });
 </script>
 
+
 </body>
 </html>
+
 
