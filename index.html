@@ -155,6 +155,23 @@ button:hover {
     body { flex-direction: column; }
     nav { width: 100%; }
 }
+
+/* Адаптивный контейнер для видео VK */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 </style>
 </head>
 
@@ -185,15 +202,15 @@ button:hover {
     <div class="card-link">Инклюзивное образование</div>
     <div class="card-link orange">Работа с эмоциональной нагрузкой</div>
 
-    <iframe 
-        src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&autoplay=0" 
-        width="853" 
-        height="480" 
-        style="background-color: #000" 
-        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
-        frameborder="0" 
-        allowfullscreen>
-    </iframe>
+    <!-- Адаптивное видео VK -->
+    <div class="video-container">
+        <iframe 
+            src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&autoplay=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
+            allowfullscreen>
+        </iframe>
+    </div>
 </div>
 
 <div id="articles" class="page">
@@ -249,7 +266,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
             name: name,
             email: email,
             message: message,
-            _replyto: email,          // важно для Gmail
+            _replyto: email,          
             _subject: "Сообщение с сайта Эверест"
         })
     })
@@ -270,5 +287,3 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
 
 </body>
 </html>
-
-
