@@ -239,6 +239,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
             name: name,
             email: email,
             message: message,
+            _replyto: email,          // важно для Gmail
             _subject: "Сообщение с сайта Эверест"
         })
     })
