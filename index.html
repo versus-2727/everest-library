@@ -163,15 +163,14 @@ button:hover {
 <nav>
     <img src="logo.png" alt="Логотип">
 
-<ul>
-    <li><a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a></li>
-    <li><a href="javascript:void(0)" onclick="showPage('video')">🎥 Видео</a></li>
-    <li><a href="javascript:void(0)" onclick="showPage('articles')">📄 Статьи</a></li>
-    <li><a href="javascript:void(0)" onclick="showPage('tools')">🛠️ Инструменты</a></li>
-    <li><a href="javascript:void(0)" onclick="showPage('topics')">🎯 Подборки</a></li>
-    <li><a href="javascript:void(0)" onclick="showPage('feedback')">📩 Обратная связь</a></li>
-</ul>
-
+    <ul>
+        <li><a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('video')">🎥 Видео</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('articles')">📄 Статьи</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('tools')">🛠️ Инструменты</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('topics')">🎯 Подборки</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('feedback')">📩 Обратная связь</a></li>
+    </ul>
 </nav>
 
 <main>
@@ -206,14 +205,11 @@ button:hover {
     <h1>📩 Обратная связь</h1>
 
     <form id="feedbackForm">
-<form id="feedbackForm">
-    <input type="text" id="name" placeholder="Ваше имя" required>
-    <input type="email" id="userEmail" placeholder="Ваш email" required>
-    <textarea id="message" placeholder="Ваше сообщение" required></textarea>
-    <button type="submit">Отправить</button>
-</form>
-
-
+        <input type="text" id="name" placeholder="Ваше имя" required>
+        <input type="email" id="userEmail" placeholder="Ваш email" required>
+        <textarea id="message" placeholder="Ваше сообщение" required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
 
     <p id="status"></p>
 </div>
@@ -222,7 +218,7 @@ button:hover {
 
 <script>
 function showPage(id){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 }
 
@@ -230,6 +226,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     const name = document.getElementById("name").value;
+    const email = document.getElementById("userEmail").value;
     const message = document.getElementById("message").value;
 
     fetch("https://formspree.io/f/xojnjpkk", {
@@ -238,7 +235,12 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ name: name, message: message })
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+            _subject: "Сообщение с сайта Эверест"
+        })
     })
     .then(response => {
         if (response.ok) {
