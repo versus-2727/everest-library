@@ -176,11 +176,11 @@ button{
 <div id="feedback" class="page">
 <h1>📩 Обратная связь</h1>
 
-<form id="feedbackForm">
-<input name="name" type="text" placeholder="Ваше имя" required>
-<input name="email" type="email" placeholder="Ваш email" required>
-<textarea name="message" placeholder="Ваше сообщение" required></textarea>
-<button type="submit">Отправить</button>
+<form action="https://formspree.io/f/xojnjpkk" method="POST">
+  <input type="text" name="name" placeholder="Ваше имя" required>
+  <input type="email" name="email" placeholder="Ваш email" required>
+  <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+  <button type="submit">Отправить</button>
 </form>
 
 <p id="status"></p>
@@ -216,3 +216,4 @@ if(res.ok)form.reset();
 
 </body>
 </html>
+
