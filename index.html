@@ -106,6 +106,7 @@ h1 {
     border-radius: 10px;
     margin: 12px 0;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .card-link.orange {
@@ -156,7 +157,7 @@ button:hover {
     nav { width: 100%; }
 }
 
-/* Адаптивный контейнер для видео VK */
+/* Адаптивное видео */
 .video-container {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
@@ -165,7 +166,7 @@ button:hover {
     margin-top: 20px;
 }
 
-.video-container iframe {
+.video-container video {
     position: absolute;
     top: 0;
     left: 0;
@@ -197,19 +198,31 @@ button:hover {
     <p>Добро пожаловать в библиотеку для студентов педагогических направлений и молодых специалистов.</p>
 </div>
 
+<!-- Видео с вкладками -->
 <div id="video" class="page">
     <h1>🎥 Видео</h1>
-    <div class="card-link">Инклюзивное образование</div>
-    <div class="card-link orange">Работа с эмоциональной нагрузкой</div>
 
-    <!-- Адаптивное видео VK -->
-    <div class="video-container">
-        <iframe 
-            src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&autoplay=0" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
-            allowfullscreen>
-        </iframe>
+    <!-- Вкладки -->
+    <div class="card-link" onclick="showVideoTab('education')">Инклюзивное образование</div>
+    <div class="card-link orange" onclick="showVideoTab('stress')">Работа с эмоциональной нагрузкой</div>
+    <div class="card-link" onclick="showVideoTab('interview')">Интервью</div>
+
+    <!-- Контент вкладок -->
+    <div id="education" class="video-tab" style="display:none;">
+        <p>Видео по инклюзивному образованию появится здесь.</p>
+    </div>
+
+    <div id="stress" class="video-tab" style="display:none;">
+        <p>Видео по работе с эмоциональной нагрузкой появится здесь.</p>
+    </div>
+
+    <div id="interview" class="video-tab" style="display:none;">
+        <div class="video-container">
+            <video controls>
+                <source src="https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key=https://disk.yandex.ru/i/c3gUafVQvQG8dw" type="video/mp4">
+                Ваш браузер не поддерживает видео тег.
+            </video>
+        </div>
     </div>
 </div>
 
@@ -249,6 +262,12 @@ function showPage(id){
     document.getElementById(id).classList.add('active');
 }
 
+function showVideoTab(tabId) {
+    document.querySelectorAll('.video-tab').forEach(tab => tab.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+}
+
+// Feedback form
 document.getElementById("feedbackForm").addEventListener("submit", function(e){
     e.preventDefault();
 
