@@ -14,118 +14,146 @@
     --bg: #f4f7f6;
 }
 
-body{
-    margin:0;
-    font-family:"Segoe UI",sans-serif;
-    display:flex;
-    min-height:100vh;
-    background:var(--bg);
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
 }
 
 /* Sidebar */
-nav{
-    width:280px;
-    background:linear-gradient(180deg,var(--teal1),var(--teal2));
-    color:white;
-    padding:30px 20px;
+nav {
+    width: 280px;
+    background: linear-gradient(180deg, var(--teal1), var(--teal2));
+    color: white;
+    padding: 30px 20px;
+    box-sizing: border-box;
 }
 
-nav img{
-    width:160px;
-    margin-bottom:30px;
+nav img {
+    width: 160px;
+    margin-bottom: 30px;
 }
 
-nav ul{list-style:none;padding:0;}
-nav li{margin:18px 0;}
-
-nav a{
-    color:#d0f0f0;
-    text-decoration:none;
-    font-size:1.1rem;
-    transition:.3s;
+nav ul {
+    list-style: none;
+    padding: 0;
 }
-nav a:hover{color:white;padding-left:6px;}
+
+nav li {
+    margin: 18px 0;
+}
+
+nav a {
+    color: #d0f0f0;
+    text-decoration: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: white;
+    padding-left: 6px;
+}
 
 /* Main */
-main{
-    flex-grow:1;
-    padding:50px;
-    position:relative;
-    overflow:hidden;
+main {
+    flex-grow: 1;
+    padding: 50px;
+    position: relative;
+    overflow: hidden;
 }
 
-main::before{
-    content:"";
-    position:absolute;
-    top:-100px;
-    right:-100px;
-    width:400px;
-    height:400px;
-    background:linear-gradient(135deg,var(--orange1),var(--orange2));
-    transform:rotate(45deg);
-    opacity:.15;
+/* Геометрия */
+main::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, var(--orange1), var(--orange2));
+    transform: rotate(45deg);
+    opacity: 0.15;
 }
 
-.page{
-    display:none;
-    background:white;
-    padding:40px;
-    border-radius:16px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+.page {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 1;
 }
 
-.active{
-    display:block;
-    animation:fadeIn .4s ease;
+.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
 }
 
-h1{margin-top:0;color:var(--teal1);}
-
-.card-link{
-    background:linear-gradient(135deg,var(--teal1),var(--teal2));
-    color:white;
-    padding:15px;
-    border-radius:10px;
-    margin:12px 0;
-    transition:.3s;
-}
-.card-link.orange{
-    background:linear-gradient(135deg,var(--orange1),var(--orange2));
-}
-.card-link:hover{transform:translateY(-4px);}
-
-/* Form */
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-    max-width:500px;
+h1 {
+    margin-top: 0;
+    color: var(--teal1);
 }
 
-input,textarea{
-    padding:14px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font-size:15px;
+.card-link {
+    background: linear-gradient(135deg, var(--teal1), var(--teal2));
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 12px 0;
+    transition: 0.3s;
 }
 
-button{
-    background:linear-gradient(135deg,var(--teal1),var(--teal2));
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
+.card-link.orange {
+    background: linear-gradient(135deg, var(--orange1), var(--orange2));
 }
 
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px);}
-    to{opacity:1;transform:translateY(0);}
+.card-link:hover {
+    transform: translateY(-4px);
+}
+
+/* Feedback form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+}
+
+input, textarea {
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+button {
+    background: linear-gradient(135deg, var(--teal1), var(--teal2));
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
 @media(max-width:768px){
-    body{flex-direction:column;}
-    nav{width:100%;}
+    body { flex-direction: column; }
+    nav { width: 100%; }
 }
 </style>
 </head>
@@ -133,91 +161,63 @@ button{
 <body>
 
 <nav>
-<img src="logo.png" alt="Логотип">
+    <img src="logo.png" alt="Логотип">
 
 <ul>
-<li><a onclick="showPage('home')">🏠 Главная</a></li>
-<li><a onclick="showPage('video')">🎥 Видео</a></li>
-<li><a onclick="showPage('articles')">📄 Статьи</a></li>
-<li><a onclick="showPage('tools')">🛠️ Инструменты</a></li>
-<li><a onclick="showPage('topics')">🎯 Подборки</a></li>
-<li><a onclick="showPage('feedback')">📩 Обратная связь</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('video')">🎥 Видео</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('articles')">📄 Статьи</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('tools')">🛠️ Инструменты</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('topics')">🎯 Подборки</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('feedback')">📩 Обратная связь</a></li>
 </ul>
+
 </nav>
 
 <main>
 
 <div id="home" class="page active">
-<h1>Онлайн-библиотека | Эверест</h1>
-<p>Добро пожаловать в библиотеку для студентов педагогических направлений и молодых специалистов.</p>
+    <h1>Онлайн-библиотека | Эверест</h1>
+    <p>Добро пожаловать в библиотеку для студентов педагогических направлений и молодых специалистов.</p>
 </div>
 
 <div id="video" class="page">
-<h1>🎥 Видео</h1>
-<div class="card-link">Инклюзивное образование</div>
-<div class="card-link orange">Работа с эмоциональной нагрузкой</div>
+    <h1>🎥 Видео</h1>
+    <div class="card-link">Инклюзивное образование</div>
+    <div class="card-link orange">Работа с эмоциональной нагрузкой</div>
 </div>
 
 <div id="articles" class="page">
-<h1>📄 Статьи</h1>
-<div class="card-link">Как начать карьеру педагога</div>
+    <h1>📄 Статьи</h1>
+    <div class="card-link">Как начать карьеру педагога</div>
 </div>
 
 <div id="tools" class="page">
-<h1>🛠️ Инструменты</h1>
-<div class="card-link orange">Шаблон резюме</div>
+    <h1>🛠️ Инструменты</h1>
+    <div class="card-link orange">Шаблон резюме</div>
 </div>
 
 <div id="topics" class="page">
-<h1>🎯 Подборки</h1>
-<p>Материалы по направлениям подготовки.</p>
+    <h1>🎯 Подборки</h1>
+    <p>Материалы по направлениям подготовки.</p>
 </div>
 
 <div id="feedback" class="page">
-  <h1>📩 Обратная связь</h1>
+    <h1>📩 Обратная связь</h1>
 
-  <form id="feedbackForm" action="https://formspree.io/f/xojnjpkk" method="POST">
-    <input type="text" name="name" placeholder="Ваше имя" required>
-    <input type="email" name="email" placeholder="Ваш email" required>
-    <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+    <form id="feedbackForm">
+<form id="feedbackForm">
+    <input type="text" id="name" placeholder="Ваше имя" required>
+    <input type="email" id="userEmail" placeholder="Ваш email" required>
+    <textarea id="message" placeholder="Ваше сообщение" required></textarea>
     <button type="submit">Отправить</button>
-  </form>
+</form>
 
-  <p id="formMessage" style="color:green; display:none;">Спасибо! Ваше сообщение отправлено.</p>
+
+
+    <p id="status"></p>
 </div>
 
-<script>
-function showPage(id){
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-}
-
-// Отправка формы через Formspree с уведомлением
-document.getElementById('feedbackForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-            document.getElementById('formMessage').style.display = 'block';
-            form.reset();
-        } else {
-            alert('Ошибка при отправке формы. Попробуйте позже.');
-        }
-    } catch (error) {
-        alert('Ошибка сети. Попробуйте позже.');
-        console.error(error);
-    }
-});
-</script>
+@@ -256,3 +257,4 @@
 </body>
 </html>
-
-
