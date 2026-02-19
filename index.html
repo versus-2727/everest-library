@@ -133,7 +133,7 @@ button{
 <body>
 
 <nav>
-<img src="logo.png">
+<img src="logo.png" alt="Логотип">
 
 <ul>
 <li><a onclick="showPage('home')">🏠 Главная</a></li>
@@ -183,37 +183,16 @@ button{
   <button type="submit">Отправить</button>
 </form>
 
-<p id="status"></p>
 </div>
 
 </main>
 
 <script>
 function showPage(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
-
-document.getElementById("feedbackForm").addEventListener("submit",function(e){
-e.preventDefault();
-
-const form=this;
-const data=new FormData(form);
-
-fetch("https://formspree.io/f/xojnjpkk",{
-method:"POST",
-body:data,
-headers:{'Accept':'application/json'}
-})
-.then(res=>{
-document.getElementById("status").innerText=
-res.ok?"Сообщение отправлено!":"Ошибка отправки";
-if(res.ok)form.reset();
-})
-.catch(()=>document.getElementById("status").innerText="Ошибка сети");
-});
 </script>
 
 </body>
 </html>
-
