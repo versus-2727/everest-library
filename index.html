@@ -229,6 +229,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     const name = document.getElementById("name").value;
+    const email = document.getElementById("userEmail").value;
     const message = document.getElementById("message").value;
 
     fetch("https://formspree.io/f/xojnjpkk", {
@@ -237,7 +238,11 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ name: name, message: message })
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message
+        })
     })
     .then(response => {
         if (response.ok) {
@@ -256,5 +261,6 @@ document.getElementById("feedbackForm").addEventListener("submit", function(e){
 
 </body>
 </html>
+
 
 
