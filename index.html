@@ -4,182 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Онлайн-библиотека | Эверест</title>
-
-<style>
-:root {
-    --teal1: #0f6f6f;
-    --teal2: #0a4f4f;
-    --orange1: #ff7a00;
-    --orange2: #ffb347;
-    --bg: #f4f7f6;
-}
-
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    display: flex;
-    min-height: 100vh;
-    background: var(--bg);
-}
-
-/* Sidebar */
-nav {
-    width: 280px;
-    background: linear-gradient(180deg, var(--teal1), var(--teal2));
-    color: white;
-    padding: 30px 20px;
-    box-sizing: border-box;
-}
-
-nav img {
-    width: 160px;
-    margin-bottom: 30px;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav li {
-    margin: 18px 0;
-}
-
-nav a {
-    color: #d0f0f0;
-    text-decoration: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: white;
-    padding-left: 6px;
-}
-
-/* Main */
-main {
-    flex-grow: 1;
-    padding: 50px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Геометрия */
-main::before {
-    content: "";
-    position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 400px;
-    height: 400px;
-    background: linear-gradient(135deg, var(--orange1), var(--orange2));
-    transform: rotate(45deg);
-    opacity: 0.15;
-}
-
-.page {
-    display: none;
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    position: relative;
-    z-index: 1;
-}
-
-.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-}
-
-h1 {
-    margin-top: 0;
-    color: var(--teal1);
-}
-
-.card-link {
-    background: linear-gradient(135deg, var(--teal1), var(--teal2));
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 12px 0;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.card-link.orange {
-    background: linear-gradient(135deg, var(--orange1), var(--orange2));
-}
-
-.card-link:hover {
-    transform: translateY(-4px);
-}
-
-/* Feedback form */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 500px;
-}
-
-input, textarea {
-    padding: 14px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-}
-
-button {
-    background: linear-gradient(135deg, var(--teal1), var(--teal2));
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.3s;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-@media(max-width:768px){
-    body { flex-direction: column; }
-    nav { width: 100%; }
-}
-
-/* Адаптивное видео */
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.video-container video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 <nav>
     <img src="logo.png" alt="Логотип">
+
+    <p class="nav-hint">Проведите по меню, чтобы увидеть все разделы</p>
 
     <ul>
         <li><a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a></li>
@@ -202,33 +35,143 @@ button:hover {
 <div id="video" class="page">
     <h1>🎥 Видео</h1>
 
-    <!-- Вкладки -->
-    <div class="card-link" onclick="showVideoTab('education')">Инклюзивное образование</div>
-    <div class="card-link orange" onclick="showVideoTab('stress')">Работа с эмоциональной нагрузкой</div>
-    <div class="card-link" onclick="showVideoTab('interview')">Интервью</div>
+    <p class="video-intro">
+        Подборка практических материалов, прямых эфиров и интервью с экспертами сферы образования.
+    </p>
 
-    <!-- Контент вкладок -->
-    <div id="education" class="video-tab" style="display:none;">
-        <p>Видео по инклюзивному образованию появится здесь.</p>
+    <div id="video-section-grid" class="video-section-grid">
+        <div class="card-link" onclick="showVideoTab('education')">Инклюзивное образование</div>
+        <div class="card-link orange" onclick="showVideoTab('stress')">Работа с эмоциональной нагрузкой</div>
+        <div class="card-link" onclick="openInterviewSection()">Интервью</div>
     </div>
 
-    <div id="stress" class="video-tab" style="display:none;">
-        <p>Видео по работе с эмоциональной нагрузкой появится здесь.</p>
+    <div id="video-tabs" class="video-tabs">
+        <div id="education" class="video-tab" style="display:none;">
+            <p>Видео по инклюзивному образованию появится здесь.</p>
+        </div>
+
+        <div id="stress" class="video-tab" style="display:none;">
+            <p>Видео по работе с эмоциональной нагрузкой появится здесь.</p>
+        </div>
     </div>
 
-<div id="interview" class="video-tab" style="display:none;">
-    <div class="video-container">
-        <iframe 
-            src="https://vk.com/video_ext.php?oid=-232465473&id=456239035&hash=adc191b7c1410bc2&autoplay=0" 
-            width="100%" 
-            height="360" 
-            style="background-color: #000" 
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
-    </div>
-</div>
+    <section id="interview-list" class="video-interviews hidden">
+        <div class="video-interviews-header">
+            <h2>Интервью и прямые эфиры</h2>
+            <button type="button" class="back-button" onclick="backToVideoSections()">← К разделам видео</button>
+        </div>
+
+        <div class="interview-grid">
+            <article class="interview-card" onclick="openInterviewVideo('arthur')">
+                <h3>Прямой эфир с Артуром Джалаловым</h3>
+                <p>Путь в профессию, работа с подростками и развитие образовательных проектов.</p>
+            </article>
+
+            <article class="interview-card" onclick="openInterviewVideo('timur')">
+                <h3>Прямой эфир с Тимуром Широковым</h3>
+                <p>Современные подходы к обучению и поддержка молодых педагогов.</p>
+            </article>
+
+            <article class="interview-card" onclick="openInterviewVideo('nadezhda')">
+                <h3>Прямой эфир с Надеждой Новожиловой</h3>
+                <p>Инклюзивные практики и выстраивание диалога с родителями.</p>
+            </article>
+
+            <article class="interview-card" onclick="openInterviewVideo('mikhail')">
+                <h3>Прямой эфир с Михаилом Коробейниковым</h3>
+                <p>Профессиональное выгорание и работа с эмоциональной нагрузкой.</p>
+            </article>
+
+            <article class="interview-card" onclick="openInterviewVideo('elena')">
+                <h3>Прямой эфир с Еленой Коноваловой</h3>
+                <p>Методическая поддержка, наставничество и развитие преподавателя.</p>
+            </article>
+
+            <article class="interview-card" onclick="openInterviewVideo('andrey')">
+                <h3>Прямой эфир с Андреем Зеленским</h3>
+                <p>Коммуникация в педагогическом коллективе и управление изменениями.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="interview-player" class="video-interview-player hidden">
+        <div class="video-interviews-header">
+            <button type="button" class="back-button" onclick="backToInterviewList()">← К списку интервью</button>
+            <button type="button" class="back-button back-button-secondary" onclick="backToVideoSections()">К разделам видео</button>
+        </div>
+
+        <div id="interview-arthur" class="interview-video hidden">
+            <h2>Прямой эфир с Артуром Джалаловым</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('arthur')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239035&hash=adc191b7c1410bc2&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="interview-timur" class="interview-video hidden">
+            <h2>Прямой эфир с Тимуром Широковым</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('timur')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239041&hash=246b8f265b9de7b3&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="interview-nadezhda" class="interview-video hidden">
+            <h2>Прямой эфир с Надеждой Новожиловой</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('nadezhda')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239048&hash=d746d13ac6af51fa&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="interview-mikhail" class="interview-video hidden">
+            <h2>Прямой эфир с Михаилом Коробейниковым</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('mikhail')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239050&hash=83ef05429593f208&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="interview-elena" class="interview-video hidden">
+            <h2>Прямой эфир с Еленой Коноваловой</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('elena')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239051&hash=b047704a91fc021a&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="interview-andrey" class="interview-video hidden">
+            <h2>Прямой эфир с Андреем Зеленским</h2>
+            <div class="video-container">
+                <div class="video-poster-overlay" onclick="startInterviewVideo('andrey')">
+                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+                </div>
+                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&hd=3"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
 </div>
 <div id="articles" class="page">
     <h1>📄 Статьи</h1>
@@ -260,53 +203,7 @@ button:hover {
 
 </main>
 
-<script>
-function showPage(id){
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-}
-
-function showVideoTab(tabId) {
-    document.querySelectorAll('.video-tab').forEach(tab => tab.style.display = 'none');
-    document.getElementById(tabId).style.display = 'block';
-}
-
-// Feedback form
-document.getElementById("feedbackForm").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("userEmail").value;
-    const message = document.getElementById("message").value;
-
-    fetch("https://formspree.io/f/xojnjpkk", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email,
-            message: message,
-            _replyto: email,          
-            _subject: "Сообщение с сайта Эверест"
-        })
-    })
-    .then(response => {
-        if (response.ok) {
-            document.getElementById("status").innerText = "Сообщение отправлено!";
-            this.reset();
-        } else {
-            document.getElementById("status").innerText = "Ошибка отправки. Попробуйте ещё раз.";
-        }
-    })
-    .catch(error => {
-        document.getElementById("status").innerText = "Ошибка отправки. Проверьте интернет.";
-        console.error(error);
-    });
-});
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
