@@ -479,5 +479,26 @@ button:hover {
    .back-button {
        padding-inline: 10px;
    }
+   .download-card {
+   display: block;
+   text-decoration: none;
+   background: linear-gradient(135deg, var(--teal1), var(--teal2));
+   color: white;
+   padding: 16px 18px;
+   border-radius: 16px;
+   margin: 10px 0;
+   font-weight: 500;
+   transition: 0.2s ease;
+   box-shadow: 0 8px 18px rgba(6,43,43,.34);
+}
+
+.download-card.orange {
+   background: linear-gradient(135deg, var(--orange1), var(--orange2));
+}
+
+.download-card:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 16px 32px rgba(0,0,0,.22);
+}
 }
 
