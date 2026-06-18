@@ -21,6 +21,7 @@ const auth = firebase.auth();
 
 let currentUser = null;
 let authReady = false;
+let likesListenerActive = false;
 
 // --- AUTH ---
 function initAuth() {
@@ -37,42 +38,64 @@ function initAuth() {
     auth.signInAnonymously()
         .then((userCredential) => {
             currentUser = userCredential.user;
-            authReady = true;
             console.log("Auth success:", currentUser.uid);
-            loadAllLikes();
+            authReady = true;
+            setupLikesListener();
         })
         .catch((error) => {
             console.error("Auth error:", error);
             // Если анонимный вход не работает, используем localStorage ID
             currentUser = { uid: savedUid };
-            authReady = true;
             console.log("Using localStorage ID:", currentUser.uid);
-            loadAllLikes();
+            authReady = true;
+            setupLikesListener();
         });
+}
+
+// Настраиваем прослушивание лайков (только один раз!)
+function setupLikesListener() {
+    if (likesListenerActive) return;
+    likesListenerActive = true;
     
-    // Следим за состоянием авторизации
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            currentUser = user;
-            authReady = true;
-            loadAllLikes();
-        }
+    if (!currentUser) return;
+    
+    const userId = currentUser.uid;
+
+    // Слушаем изменения счетчиков ВСЕХ видео в реальном времени
+    db.collection('videos').onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const videoId = doc.id;
+            const count = data.count || 0;
+            
+            const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
+            if (btn) {
+                const countSpan = btn.querySelector('.like-count');
+                countSpan.innerText = count;
+            }
+        });
+    }, (error) => {
+        console.error("Error listening to videos:", error);
     });
-    
-    // Таймаут на случай если авторизация зависла
-    setTimeout(() => {
-        if (!authReady) {
-            currentUser = { uid: savedUid };
-            authReady = true;
-            console.log("Auth timeout, using localStorage ID");
-            loadAllLikes();
-        }
-    }, 5000);
+
+    // Проверяем, какие видео лайкнул текущий пользователь
+    db.collection('likes').where('userId', '==', userId).onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => {
+            const videoId = doc.data().videoId;
+            const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
+            if (btn) {
+                btn.classList.add('liked');
+            }
+        });
+    }, (error) => {
+        console.error("Error listening to user likes:", error);
+    });
 }
 
 // --- LIKE SYSTEM ---
 async function handleLike(event, videoId) {
     event.stopPropagation();
+    event.preventDefault();
     
     if (!authReady) {
         alert("Пожалуйста, подождите 2-3 секунды и попробуйте снова");
@@ -91,89 +114,25 @@ async function handleLike(event, videoId) {
     try {
         if (isLiked) {
             // Убираем лайк
-            const likeRef = db.collection('likes').doc(`${userId}_${videoId}`);
-            await likeRef.delete();
-            
-            const videoRef = db.collection('videos').doc(videoId);
-            await videoRef.update({ count: firebase.firestore.FieldValue.increment(-1) });
-            
-            updateButtonUI(btn, false);
+            await db.collection('likes').doc(`${userId}_${videoId}`).delete();
+            await db.collection('videos').doc(videoId).update({ 
+                count: firebase.firestore.FieldValue.increment(-1) 
+            });
         } else {
             // Ставим лайк
-            const likeRef = db.collection('likes').doc(`${userId}_${videoId}`);
-            await likeRef.set({
+            await db.collection('likes').doc(`${userId}_${videoId}`).set({
                 userId: userId,
                 videoId: videoId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            
-            const videoRef = db.collection('videos').doc(videoId);
-            await videoRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
-            
-            updateButtonUI(btn, true);
+            await db.collection('videos').doc(videoId).set({ 
+                count: firebase.firestore.FieldValue.increment(1) 
+            }, { merge: true });
         }
     } catch (error) {
         console.error("Error updating like:", error);
         alert("Ошибка: " + error.message);
     }
-}
-
-function updateButtonUI(btn, liked) {
-    const countSpan = btn.querySelector('.like-count');
-    let currentCount = parseInt(countSpan.innerText) || 0;
-
-    if (liked) {
-        btn.classList.add('liked');
-        countSpan.innerText = currentCount + 1;
-    } else {
-        btn.classList.remove('liked');
-        countSpan.innerText = Math.max(0, currentCount - 1);
-    }
-}
-
-function loadAllLikes() {
-    if (!authReady || !currentUser) return;
-    
-    const userId = currentUser.uid;
-
-    // Load counts - слушаем изменения в реальном времени
-    db.collection('videos').onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-            const data = change.doc.data();
-            const videoId = change.doc.id;
-            const count = data.count || 0;
-            
-            const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
-            if (btn) {
-                const countSpan = btn.querySelector('.like-count');
-                // Если кнопка уже лайкнута, не меняем число (оно уже увеличено визуально)
-                if (!btn.classList.contains('liked')) {
-                    countSpan.innerText = count;
-                }
-            }
-        });
-    }, (error) => {
-        console.error("Error loading videos:", error);
-    });
-
-    // Load user likes
-    db.collection('likes').where('userId', '==', userId).get()
-        .then((snapshot) => {
-            snapshot.forEach((doc) => {
-                const videoId = doc.data().videoId;
-                const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
-                if (btn) {
-                    btn.classList.add('liked');
-                    // Обновляем счетчик для лайкнутых видео
-                    const countSpan = btn.querySelector('.like-count');
-                    const currentCount = parseInt(countSpan.innerText) || 0;
-                    countSpan.innerText = currentCount + 1;
-                }
-            });
-        })
-        .catch((error) => {
-            console.error("Error loading user likes:", error);
-        });
 }
 
 // --- YOUR EXISTING CODE ---
