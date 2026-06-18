@@ -10,57 +10,111 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+try {
+    firebase.initializeApp(firebaseConfig);
+} catch (e) {
+    console.log("Firebase already initialized");
+}
+
 const db = firebase.firestore();
 const auth = firebase.auth();
 
 let currentUser = null;
+let authReady = false;
 
 // --- AUTH ---
 function initAuth() {
+    // Проверяем, есть ли сохраненный UID
+    let savedUid = localStorage.getItem('everest_user_uid');
+    
+    if (!savedUid) {
+        // Создаем уникальный ID для пользователя
+        savedUid = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('everest_user_uid', savedUid);
+    }
+    
+    // Пытаемся анонимный вход
+    auth.signInAnonymously()
+        .then((userCredential) => {
+            currentUser = userCredential.user;
+            authReady = true;
+            console.log("Auth success:", currentUser.uid);
+            loadAllLikes();
+        })
+        .catch((error) => {
+            console.error("Auth error:", error);
+            // Если анонимный вход не работает, используем localStorage ID
+            currentUser = { uid: savedUid };
+            authReady = true;
+            console.log("Using localStorage ID:", currentUser.uid);
+            loadAllLikes();
+        });
+    
+    // Следим за состоянием авторизации
     auth.onAuthStateChanged((user) => {
         if (user) {
             currentUser = user;
-            localStorage.setItem('everest_user_uid', user.uid);
+            authReady = true;
             loadAllLikes();
-        } else {
-            auth.signInAnonymously().catch((error) => {
-                console.error("Auth Error:", error);
-            });
         }
     });
+    
+    // Таймаут на случай если авторизация зависла
+    setTimeout(() => {
+        if (!authReady) {
+            currentUser = { uid: savedUid };
+            authReady = true;
+            console.log("Auth timeout, using localStorage ID");
+            loadAllLikes();
+        }
+    }, 5000);
 }
 
 // --- LIKE SYSTEM ---
 async function handleLike(event, videoId) {
     event.stopPropagation();
     
+    if (!authReady) {
+        alert("Пожалуйста, подождите 2-3 секунды и попробуйте снова");
+        return;
+    }
+    
     if (!currentUser) {
-        alert("Подождите загрузку...");
+        alert("Ошибка авторизации. Обновите страницу.");
         return;
     }
 
     const btn = event.currentTarget;
     const isLiked = btn.classList.contains('liked');
-    const likeRef = db.collection('likes').doc(`${currentUser.uid}_${videoId}`);
-    const videoRef = db.collection('videos').doc(videoId);
+    const userId = currentUser.uid;
 
     try {
         if (isLiked) {
+            // Убираем лайк
+            const likeRef = db.collection('likes').doc(`${userId}_${videoId}`);
             await likeRef.delete();
+            
+            const videoRef = db.collection('videos').doc(videoId);
             await videoRef.update({ count: firebase.firestore.FieldValue.increment(-1) });
+            
             updateButtonUI(btn, false);
         } else {
+            // Ставим лайк
+            const likeRef = db.collection('likes').doc(`${userId}_${videoId}`);
             await likeRef.set({
-                userId: currentUser.uid,
+                userId: userId,
                 videoId: videoId,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
+            
+            const videoRef = db.collection('videos').doc(videoId);
             await videoRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+            
             updateButtonUI(btn, true);
         }
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error updating like:", error);
+        alert("Ошибка: " + error.message);
     }
 }
 
@@ -78,7 +132,11 @@ function updateButtonUI(btn, liked) {
 }
 
 function loadAllLikes() {
-    // Load counts
+    if (!authReady || !currentUser) return;
+    
+    const userId = currentUser.uid;
+
+    // Load counts - слушаем изменения в реальном времени
     db.collection('videos').onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
             const data = change.doc.data();
@@ -87,21 +145,35 @@ function loadAllLikes() {
             
             const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
             if (btn) {
-                btn.querySelector('.like-count').innerText = count;
+                const countSpan = btn.querySelector('.like-count');
+                // Если кнопка уже лайкнута, не меняем число (оно уже увеличено визуально)
+                if (!btn.classList.contains('liked')) {
+                    countSpan.innerText = count;
+                }
             }
         });
+    }, (error) => {
+        console.error("Error loading videos:", error);
     });
 
     // Load user likes
-    db.collection('likes').where('userId', '==', currentUser.uid).get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-            const videoId = doc.data().videoId;
-            const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
-            if (btn) {
-                btn.classList.add('liked');
-            }
+    db.collection('likes').where('userId', '==', userId).get()
+        .then((snapshot) => {
+            snapshot.forEach((doc) => {
+                const videoId = doc.data().videoId;
+                const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
+                if (btn) {
+                    btn.classList.add('liked');
+                    // Обновляем счетчик для лайкнутых видео
+                    const countSpan = btn.querySelector('.like-count');
+                    const currentCount = parseInt(countSpan.innerText) || 0;
+                    countSpan.innerText = currentCount + 1;
+                }
+            });
+        })
+        .catch((error) => {
+            console.error("Error loading user likes:", error);
         });
-    });
 }
 
 // --- YOUR EXISTING CODE ---
@@ -203,6 +275,7 @@ function startInterviewVideo(id) {
 // Feedback form
 document.addEventListener("DOMContentLoaded", () => {
     initAuth();
+    
     const feedbackForm = document.getElementById("feedbackForm");
     if (!feedbackForm) return;
     feedbackForm.addEventListener("submit", function (e) {
