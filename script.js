@@ -22,19 +22,17 @@ const auth = firebase.auth();
 let currentUser = null;
 let authReady = false;
 let likesListenerActive = false;
+let isProcessing = false; // Глобальный флаг блокировки
 
 // --- AUTH ---
 function initAuth() {
-    // Проверяем, есть ли сохраненный UID
     let savedUid = localStorage.getItem('everest_user_uid');
     
     if (!savedUid) {
-        // Создаем уникальный ID для пользователя
         savedUid = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('everest_user_uid', savedUid);
     }
     
-    // Пытаемся анонимный вход
     auth.signInAnonymously()
         .then((userCredential) => {
             currentUser = userCredential.user;
@@ -44,7 +42,6 @@ function initAuth() {
         })
         .catch((error) => {
             console.error("Auth error:", error);
-            // Если анонимный вход не работает, используем localStorage ID
             currentUser = { uid: savedUid };
             console.log("Using localStorage ID:", currentUser.uid);
             authReady = true;
@@ -52,7 +49,6 @@ function initAuth() {
         });
 }
 
-// Настраиваем прослушивание лайков (только один раз!)
 function setupLikesListener() {
     if (likesListenerActive) return;
     likesListenerActive = true;
@@ -61,7 +57,7 @@ function setupLikesListener() {
     
     const userId = currentUser.uid;
 
-    // Слушаем изменения счетчиков ВСЕХ видео в реальном времени
+    // Слушаем счетчики видео
     db.collection('videos').onSnapshot((snapshot) => {
         snapshot.forEach((doc) => {
             const data = doc.data();
@@ -71,14 +67,17 @@ function setupLikesListener() {
             const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
             if (btn) {
                 const countSpan = btn.querySelector('.like-count');
-                countSpan.innerText = count;
+                // Обновляем только если не идет процесс обработки (чтобы не мигало)
+                if (!isProcessing) {
+                    countSpan.innerText = count;
+                }
             }
         });
     }, (error) => {
         console.error("Error listening to videos:", error);
     });
 
-    // Проверяем, какие видео лайкнул текущий пользователь
+    // Слушаем лайки текущего пользователя
     db.collection('likes').where('userId', '==', userId).onSnapshot((snapshot) => {
         snapshot.forEach((doc) => {
             const videoId = doc.data().videoId;
@@ -97,6 +96,9 @@ async function handleLike(event, videoId) {
     event.stopPropagation();
     event.preventDefault();
     
+    // 1. Блокировка повторных кликов
+    if (isProcessing) return;
+    
     if (!authReady) {
         alert("Пожалуйста, подождите 2-3 секунды и попробуйте снова");
         return;
@@ -107,6 +109,8 @@ async function handleLike(event, videoId) {
         return;
     }
 
+    // Включаем блокировку
+    isProcessing = true;
     const btn = event.currentTarget;
     const isLiked = btn.classList.contains('liked');
     const userId = currentUser.uid;
@@ -132,6 +136,11 @@ async function handleLike(event, videoId) {
     } catch (error) {
         console.error("Error updating like:", error);
         alert("Ошибка: " + error.message);
+    } finally {
+        // Снимаем блокировку через небольшую задержку (защита от dblclick)
+        setTimeout(() => {
+            isProcessing = false;
+        }, 600);
     }
 }
 
