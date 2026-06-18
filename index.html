@@ -56,70 +56,142 @@
         </div>
     </div>
 
-    <section id="interview-list" class="video-interviews hidden">
-        <div class="video-interviews-header">
-            <h2>Интервью и прямые эфиры</h2>
-            <button type="button" class="back-button" onclick="backToVideoSections()">← К разделам видео</button>
-        </div>
+<section id="interview-list" class="video-interviews hidden">
+    <div class="video-interviews-header">
+        <h2>Интервью и прямые эфиры</h2>
+        <button type="button" class="back-button" onclick="backToVideoSections()">← К разделам видео</button>
+    </div>
 
-        <div class="interview-grid">
-            <article class="interview-card" onclick="openInterviewVideo('arthur')">
-                <h3>Прямой эфир с Артуром Джалаловым</h3>
-                <p>Путь в профессию, работа с подростками и развитие образовательных проектов.</p>
-            </article>
+    <div class="interview-grid">
+        <article class="interview-card" onclick="openInterviewVideo('arthur')">
+            <h3>Прямой эфир с Артуром Джалаловым</h3>
+            <p>Путь в профессию, работа с подростками и развитие образовательных проектов.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="arthur" onclick="handleLike(event, 'arthur')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('timur')">
-                <h3>Прямой эфир с Тимуром Широковым</h3>
-                <p>Современные подходы к обучению и поддержка молодых педагогов.</p>
-            </article>
+        <article class="interview-card" onclick="openInterviewVideo('timur')">
+            <h3>Прямой эфир с Тимуром Широковым</h3>
+            <p>Современные подходы к обучению и поддержка молодых педагогов.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="timur" onclick="handleLike(event, 'timur')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('nadezhda')">
-                <h3>Прямой эфир с Надеждой Новожиловой</h3>
-                <p>Инклюзивные практики и выстраивание диалога с родителями.</p>
-            </article>
+        <article class="interview-card" onclick="openInterviewVideo('nadezhda')">
+            <h3>Прямой эфир с Надеждой Новожиловой</h3>
+            <p>Инклюзивные практики и выстраивание диалога с родителями.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="nadezhda" onclick="handleLike(event, 'nadezhda')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('mikhail')">
-                <h3>Прямой эфир с Михаилом Коробейниковым</h3>
-                <p>Профессиональное выгорание и работа с эмоциональной нагрузкой.</p>
-            </article>
+        <article class="interview-card" onclick="openInterviewVideo('mikhail')">
+            <h3>Прямой эфир с Михаилом Коробейниковым</h3>
+            <p>Профессиональное выгорание и работа с эмоциональной нагрузкой.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="mikhail" onclick="handleLike(event, 'mikhail')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('elena')">
-                <h3>Прямой эфир с Еленой Коноваловой</h3>
-                <p>Методическая поддержка, наставничество и развитие преподавателя.</p>
-            </article>
+        <article class="interview-card" onclick="openInterviewVideo('elena')">
+            <h3>Прямой эфир с Еленой Коноваловой</h3>
+            <p>Методическая поддержка, наставничество и развитие преподавателя.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="elena" onclick="handleLike(event, 'elena')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('andrey')">
-                <h3>Прямой эфир с Андреем Зеленским</h3>
-                <p>Коммуникация в педагогическом коллективе и управление изменениями.</p>
-            </article>
-            
-            <article class="interview-card" onclick="openInterviewVideo('olga')">
-                <h3>Прямой эфир с Ольгой Баранцевой</h3>
-                <p>///</p>
-            </article>
+        <article class="interview-card" onclick="openInterviewVideo('andrey')">
+            <h3>Прямой эфир с Андреем Зеленским</h3>
+            <p>Коммуникация в педагогическом коллективе и управление изменениями.</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="andrey" onclick="handleLike(event, 'andrey')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+        
+        <article class="interview-card" onclick="openInterviewVideo('olga')">
+            <h3>Прямой эфир с Ольгой Баранцевой</h3>
+            <p>///</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="olga" onclick="handleLike(event, 'olga')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
 
-            <article class="interview-card" onclick="openInterviewVideo('irina')">
-                <h3>Прямой эфир с Ириной Булыковой</h3>
-                <p>///</p>
-            </article>
-            <article class="interview-card" onclick="openInterviewVideo('lilia1')">
-                <h3>Интервью с Лилией Ветюговой (часть1)</h3>
-                <p>Карьера в профессии педагога: реальные возможности</p>
-            </article>
-            <article class="interview-card" onclick="openInterviewVideo('lilia2')">
-                <h3>Интервью с Лилией Ветюговой (часть2)</h3>
-                <p>Какие перспективы открываются перед современными педагогами и почему эта профессия становится всё более востребованной</p>
-            </article>
-            <article class="interview-card" onclick="openInterviewVideo('lilia3')">
-                <h3>Интервью с Лилией Ветюговой (часть3)</h3>
-                <p>Современные возможности в сфере педагогики, карьерный рост и перспективы для будущих специалистов</p>
-            </article>
-            <article class="interview-card" onclick="openInterviewVideo('komanda')">
-                <h3>Интервью с участниками, экспертами, командой</h3>
-                <p>Голоса тех, кто был внутри событий</p>
-            </article>
-        </div>
-    </section>
+        <article class="interview-card" onclick="openInterviewVideo('irina')">
+            <h3>Прямой эфир с Ириной Булыковой</h3>
+            <p>///</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="irina" onclick="handleLike(event, 'irina')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+        <article class="interview-card" onclick="openInterviewVideo('lilia1')">
+            <h3>Интервью с Лилией Ветюговой (часть1)</h3>
+            <p>Карьера в профессии педагога: реальные возможности</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="lilia1" onclick="handleLike(event, 'lilia1')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+        <article class="interview-card" onclick="openInterviewVideo('lilia2')">
+            <h3>Интервью с Лилией Ветюговой (часть2)</h3>
+            <p>Какие перспективы открываются перед современными педагогами и почему эта профессия становится всё более востребованной</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="lilia2" onclick="handleLike(event, 'lilia2')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+        <article class="interview-card" onclick="openInterviewVideo('lilia3')">
+            <h3>Интервью с Лилией Ветюговой (часть3)</h3>
+            <p>Современные возможности в сфере педагогики, карьерный рост и перспективы для будущих специалистов</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="lilia3" onclick="handleLike(event, 'lilia3')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+        <article class="interview-card" onclick="openInterviewVideo('komanda')">
+            <h3>Интервью с участниками, экспертами, командой</h3>
+            <p>Голоса тех, кто был внутри событий</p>
+            <div class="like-container">
+                <button class="like-btn" data-id="komanda" onclick="handleLike(event, 'komanda')">
+                    <span class="heart-icon">❤</span> 
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </article>
+    </div>
+</section>
 
     <section id="interview-player" class="video-interview-player hidden">
         <div class="video-interviews-header">
@@ -322,7 +394,12 @@
 
 </main>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="script.js"></script>
+    
 
 </body>
 </html>
