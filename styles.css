@@ -198,7 +198,10 @@ textarea:focus {
     box-shadow: 0 0 0 1px rgba(15, 111, 111, 0.25);
 }
 
-button {
+/* Кнопки формы и навигации (НЕ трогаем кнопки лайков) */
+button[type="submit"],
+.back-button,
+.back-button-secondary {
     background: linear-gradient(135deg, var(--teal1), var(--teal2));
     color: #ffffff;
     border: none;
@@ -211,7 +214,9 @@ button {
     align-self: flex-start;
 }
 
-button:hover {
+button[type="submit"]:hover,
+.back-button:hover,
+.back-button-secondary:hover {
     opacity: 0.95;
     transform: translateY(-1px);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
@@ -275,7 +280,7 @@ button:hover {
 }
 
 .back-button {
-    background: transparent;
+    background: transparent !important;
     border-radius: 999px;
     border: 1px solid rgba(15, 111, 111, 0.4);
     color: var(--teal1);
@@ -285,7 +290,7 @@ button:hover {
 }
 
 .back-button:hover {
-    background: rgba(15, 111, 111, 0.06);
+    background: rgba(15, 111, 111, 0.06) !important;
     box-shadow: none;
 }
 
@@ -294,10 +299,17 @@ button:hover {
     color: #4b5563;
 }
 
- .interview-grid {
+.interview-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
    gap: 18px;
+}
+
+/* Обёртка карточки + лайк */
+.interview-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .interview-card {
@@ -345,7 +357,7 @@ button:hover {
 /* Адаптивное видео */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     margin-top: 6px;
@@ -389,7 +401,7 @@ button:hover {
     visibility: hidden;
 }
 
-/* === БЛОК ПРЕЗЕНТАЦИЙ */
+/* === БЛОК ПРЕЗЕНТАЦИЙ === */
 
 .presentation-list {
    display: flex;
@@ -419,6 +431,63 @@ button:hover {
    transform: translateY(-3px);
    box-shadow: 0 16px 32px rgba(0,0,0,.22);
 }
+
+/* === КНОПКИ ЛАЙКОВ === */
+
+.like-container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 4px;
+}
+
+.like-btn {
+    background: transparent !important;
+    border: 2px solid rgba(15, 111, 111, 0.35) !important;
+    color: var(--teal1) !important;
+    padding: 6px 14px !important;
+    border-radius: 999px !important;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+    outline: none;
+    box-shadow: none !important;
+    align-self: flex-start;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+.like-btn .heart-icon {
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+    color: var(--teal1);
+}
+
+/* Состояние: лайк поставлен */
+.like-btn.liked {
+    background: rgba(255, 122, 0, 0.12) !important;
+    border-color: var(--orange1) !important;
+    color: var(--orange1) !important;
+}
+
+.like-btn.liked .heart-icon {
+    transform: scale(1.2);
+    color: var(--orange1);
+}
+
+.like-btn:hover:not(.liked) {
+    border-color: var(--teal1) !important;
+    background: rgba(15, 111, 111, 0.06) !important;
+    color: var(--teal1) !important;
+}
+
+.like-btn:active {
+    transform: scale(0.96) !important;
+}
+
 /* Адаптив */
 @media (max-width: 1024px) {
    nav {
@@ -509,47 +578,14 @@ button:hover {
    .back-button {
        padding-inline: 10px;
    }
-}
-
-/* Стили для лайков */
-.like-container {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.like-btn {
-    background: transparent;
-    border: 2px solid rgba(15, 111, 111, 0.3);
-    color: rgba(15, 111, 111, 0.6);
-    padding: 6px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.like-btn .heart-icon {
-    font-size: 1.1rem;
-    transition: transform 0.2s ease;
-}
-
-.like-btn.liked {
-    background: rgba(255, 122, 0, 0.1);
-    border-color: var(--orange1);
-    color: var(--orange1);
-}
-
-.like-btn.liked .heart-icon {
-    transform: scale(1.2);
-    color: var(--orange1);
-}
-
-.like-btn:hover:not(.liked) {
-    border-color: var(--teal1);
-    color: var(--teal1);
+   
+   /* Лайки на мобильных */
+   .like-btn {
+       padding: 8px 16px !important;
+       font-size: 0.95rem;
+   }
+   
+   .like-btn .heart-icon {
+       font-size: 1.1rem;
+   }
 }
