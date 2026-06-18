@@ -22,7 +22,7 @@ const auth = firebase.auth();
 let currentUser = null;
 let authReady = false;
 let likesListenerActive = false;
-let isProcessing = false; // Глобальный флаг блокировки
+let isProcessing = false;
 
 // --- AUTH ---
 function initAuth() {
@@ -67,7 +67,6 @@ function setupLikesListener() {
             const btn = document.querySelector(`.like-btn[data-id="${videoId}"]`);
             if (btn) {
                 const countSpan = btn.querySelector('.like-count');
-                // Обновляем только если не идет процесс обработки (чтобы не мигало)
                 if (!isProcessing) {
                     countSpan.innerText = count;
                 }
@@ -91,13 +90,43 @@ function setupLikesListener() {
     });
 }
 
-// --- LIKE SYSTEM ---
+// === НОВАЯ ФУНКЦИЯ: СБРОС ВСЕХ ЛАЙКОВ ===
+async function resetAllLikes() {
+    if (!confirm("⚠️ Вы уверены, что хотите СБРОСИТЬ ВСЕ лайки?\n\nЭто действие нельзя отменить!")) return;
+    
+    try {
+        const snapshot = await db.collection('videos').get();
+        const batch = db.batch();
+        let count = 0;
+        
+        snapshot.forEach((doc) => {
+            batch.update(doc.ref, { count: 0 });
+            count++;
+        });
+        
+        if (count === 0) {
+            alert("Нет лайков для сброса");
+            return;
+        }
+        
+        await batch.commit();
+        alert(`✅ Все лайки сброшены! (Обнулено ${count} записей)`);
+    } catch (error) {
+        console.error("Error resetting likes:", error);
+        alert("❌ Ошибка при сбросе: " + error.message);
+    }
+}
+
+// === ИСПРАВЛЕННАЯ ФУНКЦИЯ ЛАЙКОВ ===
 async function handleLike(event, videoId) {
     event.stopPropagation();
     event.preventDefault();
     
-    // 1. Блокировка повторных кликов
-    if (isProcessing) return;
+    // Блокировка повторных кликов
+    if (isProcessing) {
+        console.log("Обработка уже идет, ждем...");
+        return;
+    }
     
     if (!authReady) {
         alert("Пожалуйста, подождите 2-3 секунды и попробуйте снова");
@@ -109,38 +138,60 @@ async function handleLike(event, videoId) {
         return;
     }
 
-    // Включаем блокировку
     isProcessing = true;
     const btn = event.currentTarget;
-    const isLiked = btn.classList.contains('liked');
     const userId = currentUser.uid;
+    const likeDocRef = db.collection('likes').doc(`${userId}_${videoId}`);
+    const videoDocRef = db.collection('videos').doc(videoId);
 
     try {
-        if (isLiked) {
-            // Убираем лайк
-            await db.collection('likes').doc(`${userId}_${videoId}`).delete();
-            await db.collection('videos').doc(videoId).update({ 
-                count: firebase.firestore.FieldValue.increment(-1) 
-            });
-        } else {
-            // Ставим лайк
-            await db.collection('likes').doc(`${userId}_${videoId}`).set({
-                userId: userId,
-                videoId: videoId,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            await db.collection('videos').doc(videoId).set({ 
-                count: firebase.firestore.FieldValue.increment(1) 
-            }, { merge: true });
-        }
+        // Используем транзакцию для атомарности операций
+        await db.runTransaction(async (transaction) => {
+            const likeDoc = await transaction.get(likeDocRef);
+            const videoDoc = await transaction.get(videoDocRef);
+            
+            const isLiked = likeDoc.exists;
+            const currentCount = videoDoc.exists ? (videoDoc.data().count || 0) : 0;
+            
+            if (isLiked) {
+                // === УБИРАЕМ ЛАЙК ===
+                console.log(`Убираем лайк у ${videoId}. Было: ${currentCount}`);
+                
+                transaction.delete(likeDocRef);
+                
+                // Не даем уйти в минус!
+                if (currentCount > 0) {
+                    transaction.update(videoDocRef, { count: currentCount - 1 });
+                } else {
+                    console.warn("Счетчик уже 0, не уменьшаем");
+                }
+            } else {
+                // === СТАВИМ ЛАЙК ===
+                console.log(`Ставим лайк у ${videoId}. Было: ${currentCount}`);
+                
+                transaction.set(likeDocRef, {
+                    userId: userId,
+                    videoId: videoId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                transaction.set(videoDocRef, { 
+                    count: firebase.firestore.FieldValue.increment(1) 
+                }, { merge: true });
+            }
+        });
+        
+        console.log("Операция завершена успешно");
+        
     } catch (error) {
         console.error("Error updating like:", error);
         alert("Ошибка: " + error.message);
     } finally {
-        // Снимаем блокировку через небольшую задержку (защита от dblclick)
+        // Снимаем блокировку с задержкой
         setTimeout(() => {
             isProcessing = false;
-        }, 600);
+            console.log("Блокировка снята");
+        }, 500);
     }
 }
 
