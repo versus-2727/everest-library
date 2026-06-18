@@ -511,3 +511,45 @@ button:hover {
    }
 }
 
+/* Стили для лайков */
+.like-container {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.like-btn {
+    background: transparent;
+    border: 2px solid rgba(15, 111, 111, 0.3);
+    color: rgba(15, 111, 111, 0.6);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.like-btn .heart-icon {
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.like-btn.liked {
+    background: rgba(255, 122, 0, 0.1);
+    border-color: var(--orange1);
+    color: var(--orange1);
+}
+
+.like-btn.liked .heart-icon {
+    transform: scale(1.2);
+    color: var(--orange1);
+}
+
+.like-btn:hover:not(.liked) {
+    border-color: var(--teal1);
+    color: var(--teal1);
+}
