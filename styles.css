@@ -434,11 +434,10 @@ button[type="submit"]:hover,
 
 /* === БЛОК ИНСТРУМЕНТОВ === */
 .tools-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px; /* Увеличил отступ между кнопками */
-    margin-top: 24px;
-    max-width: 650px;
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+   margin-top: 20px;
 }
 
 /* Делаем так, чтобы смайлик и текст внутри кнопки были красиво выровнены */
