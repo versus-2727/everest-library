@@ -406,7 +406,7 @@ button[type="submit"]:hover,
 .presentation-list {
    display: flex;
    flex-direction: column;
-   gap: 14px;
+   gap: 18px;
    margin-top: 20px;
 }
 
@@ -436,7 +436,7 @@ button[type="submit"]:hover,
 .tools-grid {
     display: flex;
     flex-direction: column;
-    gap: 14px; /* Это свойство работает ТОЛЬКО если элементы лежат внутри .tools-grid */
+    gap: 18px; /* Это свойство работает ТОЛЬКО если элементы лежат внутри .tools-grid */
     margin-top: 24px;
     max-width: 650px;
 }
