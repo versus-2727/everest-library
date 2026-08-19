@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Онлайн-библиотека | Эверест</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-библиотека | Эверест</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -15,25 +15,55 @@
     <p class="nav-hint">Проведите по меню, чтобы увидеть все разделы</p>
 
     <ul>
-        <li><a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('video')">🎥 Видео</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('articles')">📄 Статьи</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('tools')">🛠️ Инструменты</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('topics')">🎯 Подборки</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('presentations')">📊 Презентации</a></li>
-        <li><a href="javascript:void(0)" onclick="showPage('feedback')">📩 Обратная связь</a></li>
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('home')">🏠 Главная</a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('video')">🎥 Видео</a>
+        </li>
+
+        <!--
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('articles')">📄 Статьи</a>
+        </li>
+        -->
+
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('tools')">🛠️ Инструменты</a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('topics')">🎯 Подборки</a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('presentations')">📊 Презентации</a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0)" onclick="showPage('feedback')">📩 Обратная связь</a>
+        </li>
     </ul>
 </nav>
 
 <main>
 
+<!-- ==================== ГЛАВНАЯ ==================== -->
+
 <div id="home" class="page active">
     <h1>Онлайн-библиотека | Эверест</h1>
-    <p>Добро пожаловать в библиотеку для студентов педагогических направлений и молодых специалистов.</p>
+    <p>
+        Добро пожаловать в библиотеку для студентов педагогических направлений
+        и молодых специалистов.
+    </p>
 </div>
 
-<!-- Видео с вкладками -->
+
+<!-- ==================== ВИДЕО ==================== -->
+
 <div id="video" class="page">
+
     <h1>🎥 Видео</h1>
 
     <p class="video-intro">
@@ -41,487 +71,1028 @@
     </p>
 
     <div id="video-section-grid" class="video-section-grid">
-        <div class="card-link" onclick="showVideoTab('education')">Инклюзивное образование</div>
-        <div class="card-link orange" onclick="showVideoTab('stress')">Работа с эмоциональной нагрузкой</div>
-        <div class="card-link" onclick="openInterviewSection()">Интервью</div>
+
+        <div class="card-link" onclick="showVideoTab('education')">
+            Прямые эфиры
+        </div>
+
+        <div class="card-link orange" onclick="showVideoTab('stress')">
+            Работа с эмоциональной нагрузкой
+        </div>
+
+        <div class="card-link" onclick="openInterviewSection()">
+            Интервью
+        </div>
+
     </div>
+
+
+    <!-- ==================== ВКЛАДКИ ВИДЕО ==================== -->
 
     <div id="video-tabs" class="video-tabs">
+
+        <!-- ===== ПРЯМЫЕ ЭФИРЫ ===== -->
+
         <div id="education" class="video-tab" style="display:none;">
-            <p>Видео по инклюзивному образованию появится здесь.</p>
+
+            <div class="interview-grid">
+
+                <!-- Артур -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('arthur')">
+                        <h3>Прямой эфир с Артуром Джалаловым</h3>
+                        <p>
+                            Путь в профессию, работа с подростками и развитие образовательных проектов.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="arthur"
+                                onclick="handleLike(event, 'arthur')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Тимур -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('timur')">
+                        <h3>Прямой эфир с Тимуром Широковым</h3>
+                        <p>
+                            Современные подходы к обучению и поддержка молодых педагогов.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="timur"
+                                onclick="handleLike(event, 'timur')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Надежда -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('nadezhda')">
+                        <h3>Прямой эфир с Надеждой Новожиловой</h3>
+                        <p>
+                            Инклюзивные практики и выстраивание диалога с родителями.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="nadezhda"
+                                onclick="handleLike(event, 'nadezhda')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Михаил -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('mikhail')">
+                        <h3>Прямой эфир с Михаилом Коробейниковым</h3>
+                        <p>
+                            Профессиональное выгорание и работа с эмоциональной нагрузкой.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="mikhail"
+                                onclick="handleLike(event, 'mikhail')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Елена -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('elena')">
+                        <h3>Прямой эфир с Еленой Коноваловой</h3>
+                        <p>
+                            Методическая поддержка, наставничество и развитие преподавателя.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="elena"
+                                onclick="handleLike(event, 'elena')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Андрей -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('andrey')">
+                        <h3>Прямой эфир с Андреем Зеленским</h3>
+                        <p>
+                            Коммуникация в педагогическом коллективе и управление изменениями.
+                        </p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="andrey"
+                                onclick="handleLike(event, 'andrey')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Ольга -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('olga')">
+                        <h3>Прямой эфир с Ольгой Баранцевой</h3>
+                        <p></p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="olga"
+                                onclick="handleLike(event, 'olga')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Ирина -->
+                <div class="interview-card-wrapper">
+                    <article class="interview-card" onclick="openInterviewVideo('irina')">
+                        <h3>Прямой эфир с Ириной Булыковой</h3>
+                        <p></p>
+                    </article>
+
+                    <div class="like-container">
+                        <button class="like-btn"
+                                data-id="irina"
+                                onclick="handleLike(event, 'irina')">
+                            <span class="heart-icon">❤</span>
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+
+        <!-- ===== РАБОТА С ЭМОЦИОНАЛЬНОЙ НАГРУЗКОЙ ===== -->
 
         <div id="stress" class="video-tab" style="display:none;">
-            <p>Видео по работе с эмоциональной нагрузкой появится здесь.</p>
+
+            <div class="interview-grid">
+
+                <div class="interview-card-wrapper">
+
+                    <article class="interview-card"
+                             onclick="openInterviewVideo('irina123')">
+
+                        <h3>Вебинар с Ириной Булыковой</h3>
+
+                        <p></p>
+
+                    </article>
+
+                    <div class="like-container">
+
+                        <button class="like-btn"
+                                data-id="irina123"
+                                onclick="handleLike(event, 'irina123')">
+
+                            <span class="heart-icon">❤</span>
+
+                            <span class="like-count">0</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 
-<section id="interview-list" class="video-interviews hidden">
-    <div class="video-interviews-header">
-        <h2>Интервью и прямые эфиры</h2>
-        <button type="button" class="back-button" onclick="backToVideoSections()">← К разделам видео</button>
-    </div>
 
-    <div class="interview-grid">
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('arthur')">
-                <h3>Прямой эфир с Артуром Джалаловым</h3>
-                <p>Путь в профессию, работа с подростками и развитие образовательных проектов.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="arthur" onclick="handleLike(event, 'arthur')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
+    <!-- ==================== ИНТЕРВЬЮ ==================== -->
 
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('timur')">
-                <h3>Прямой эфир с Тимуром Широковым</h3>
-                <p>Современные подходы к обучению и поддержка молодых педагогов.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="timur" onclick="handleLike(event, 'timur')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
+    <section id="interview-list" class="video-interviews hidden">
+
+        <div class="video-interviews-header">
+
+            <h2>Интервью и прямые эфиры</h2>
+
+            <button type="button"
+                    class="back-button"
+                    onclick="backToVideoSections()">
+
+                ← К разделам видео
+
+            </button>
+
         </div>
 
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('nadezhda')">
-                <h3>Прямой эфир с Надеждой Новожиловой</h3>
-                <p>Инклюзивные практики и выстраивание диалога с родителями.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="nadezhda" onclick="handleLike(event, 'nadezhda')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
+
+        <div class="interview-grid">
+
+            <!-- Лилия часть 1 -->
+            <div class="interview-card-wrapper">
+
+                <article class="interview-card"
+                         onclick="openInterviewVideo('lilia1')">
+
+                    <h3>Интервью с Лилией Ветюговой (часть1)</h3>
+
+                    <p>
+                        Карьера в профессии педагога: реальные возможности
+                    </p>
+
+                </article>
+
+                <div class="like-container">
+
+                    <button class="like-btn"
+                            data-id="lilia1"
+                            onclick="handleLike(event, 'lilia1')">
+
+                        <span class="heart-icon">❤</span>
+
+                        <span class="like-count">0</span>
+
+                    </button>
+
+                </div>
+
             </div>
+
+
+            <!-- Лилия часть 2 -->
+            <div class="interview-card-wrapper">
+
+                <article class="interview-card"
+                         onclick="openInterviewVideo('lilia2')">
+
+                    <h3>Интервью с Лилией Ветюговой (часть2)</h3>
+
+                    <p>
+                        Какие перспективы открываются перед современными педагогами
+                        и почему эта профессия становится всё более востребованной
+                    </p>
+
+                </article>
+
+                <div class="like-container">
+
+                    <button class="like-btn"
+                            data-id="lilia2"
+                            onclick="handleLike(event, 'lilia2')">
+
+                        <span class="heart-icon">❤</span>
+
+                        <span class="like-count">0</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Лилия часть 3 -->
+            <div class="interview-card-wrapper">
+
+                <article class="interview-card"
+                         onclick="openInterviewVideo('lilia3')">
+
+                    <h3>Интервью с Лилией Ветюговой (часть3)</h3>
+
+                    <p>
+                        Современные возможности в сфере педагогики,
+                        карьерный рост и перспективы для будущих специалистов
+                    </p>
+
+                </article>
+
+                <div class="like-container">
+
+                    <button class="like-btn"
+                            data-id="lilia3"
+                            onclick="handleLike(event, 'lilia3')">
+
+                        <span class="heart-icon">❤</span>
+
+                        <span class="like-count">0</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Команда -->
+            <div class="interview-card-wrapper">
+
+                <article class="interview-card"
+                         onclick="openInterviewVideo('komanda')">
+
+                    <h3>Интервью с участниками, экспертами, командой</h3>
+
+                    <p>
+                        Голоса тех, кто был внутри событий
+                    </p>
+
+                </article>
+
+                <div class="like-container">
+
+                    <button class="like-btn"
+                            data-id="komanda"
+                            onclick="handleLike(event, 'komanda')">
+
+                        <span class="heart-icon">❤</span>
+
+                        <span class="like-count">0</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Анна -->
+            <div class="interview-card-wrapper">
+
+                <article class="interview-card"
+                         onclick="openInterviewVideo('ann')">
+
+                    <h3>Интервью с Пошиваловой Анной</h3>
+
+                    <p>
+                        Молодость, вдохновение и любовь к профессии —
+                        качества, которые помогают менять образование уже сегодня
+                    </p>
+
+                </article>
+
+                <div class="like-container">
+
+                    <button class="like-btn"
+                            data-id="ann"
+                            onclick="handleLike(event, 'ann')">
+
+                        <span class="heart-icon">❤</span>
+
+                        <span class="like-count">0</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('mikhail')">
-                <h3>Прямой эфир с Михаилом Коробейниковым</h3>
-                <p>Профессиональное выгорание и работа с эмоциональной нагрузкой.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="mikhail" onclick="handleLike(event, 'mikhail')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
+    </section>
 
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('elena')">
-                <h3>Прямой эфир с Еленой Коноваловой</h3>
-                <p>Методическая поддержка, наставничество и развитие преподавателя.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="elena" onclick="handleLike(event, 'elena')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
 
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('andrey')">
-                <h3>Прямой эфир с Андреем Зеленским</h3>
-                <p>Коммуникация в педагогическом коллективе и управление изменениями.</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="andrey" onclick="handleLike(event, 'andrey')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-        
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('olga')">
-                <h3>Прямой эфир с Ольгой Баранцевой</h3>
-                <p></p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="olga" onclick="handleLike(event, 'olga')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('irina')">
-                <h3>Прямой эфир с Ириной Булыковой</h3>
-                <p></p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="irina" onclick="handleLike(event, 'irina')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('lilia1')">
-                <h3>Интервью с Лилией Ветюговой (часть1)</h3>
-                <p>Карьера в профессии педагога: реальные возможности</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="lilia1" onclick="handleLike(event, 'lilia1')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('lilia2')">
-                <h3>Интервью с Лилией Ветюговой (часть2)</h3>
-                <p>Какие перспективы открываются перед современными педагогами и почему эта профессия становится всё более востребованной</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="lilia2" onclick="handleLike(event, 'lilia2')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('lilia3')">
-                <h3>Интервью с Лилией Ветюговой (часть3)</h3>
-                <p>Современные возможности в сфере педагогики, карьерный рост и перспективы для будущих специалистов</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="lilia3" onclick="handleLike(event, 'lilia3')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('komanda')">
-                <h3>Интервью с участниками, экспертами, командой</h3>
-                <p>Голоса тех, кто был внутри событий</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="komanda" onclick="handleLike(event, 'komanda')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('ann')">
-                <h3>Интервью с Пошиваловой Анной</h3>
-                <p>Молодость, вдохновение и любовь к профессии — качества, которые помогают менять образование уже сегодня</p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="ann" onclick="handleLike(event, 'ann')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-        
-    
-
-    <div class="interview-card-wrapper">
-            <article class="interview-card" onclick="openInterviewVideo('irina123')">
-                <h3>Вебинар с Ириной Булыковой</h3>
-                <p></p>
-            </article>
-            <div class="like-container">
-                <button class="like-btn" data-id="irina123" onclick="handleLike(event, 'irina123')">
-                    <span class="heart-icon">❤</span> 
-                    <span class="like-count">0</span>
-                </button>
-            </div>
-        </div>
-</div>
-</section>
+    <!-- ==================== ПРОИГРЫВАТЕЛИ ==================== -->
 
     <section id="interview-player" class="video-interview-player hidden">
+
         <div class="video-interviews-header">
-            <button type="button" class="back-button" onclick="backToInterviewList()">← К списку интервью</button>
-            <button type="button" class="back-button back-button-secondary" onclick="backToVideoSections()">К разделам видео</button>
+
+            <button type="button"
+                    class="back-button"
+                    onclick="backToInterviewList()">
+
+                ← К списку интервью
+
+            </button>
+
+            <button type="button"
+                    class="back-button back-button-secondary"
+                    onclick="backToVideoSections()">
+
+                К разделам видео
+
+            </button>
+
         </div>
 
+
+        <!-- Артур -->
         <div id="interview-arthur" class="interview-video hidden">
+
             <h2>Прямой эфир с Артуром Джалаловым</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('arthur')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('arthur')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239035&hash=adc191b7c1410bc2&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239035&hash=adc191b7c1410bc2&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Тимур -->
         <div id="interview-timur" class="interview-video hidden">
+
             <h2>Прямой эфир с Тимуром Широковым</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('timur')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('timur')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239041&hash=246b8f265b9de7b3&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239041&hash=246b8f265b9de7b3&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Надежда -->
         <div id="interview-nadezhda" class="interview-video hidden">
+
             <h2>Прямой эфир с Надеждой Новожиловой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('nadezhda')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('nadezhda')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239048&hash=d746d13ac6af51fa&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239048&hash=d746d13ac6af51fa&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Михаил -->
         <div id="interview-mikhail" class="interview-video hidden">
+
             <h2>Прямой эфир с Михаилом Коробейниковым</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('mikhail')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('mikhail')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239050&hash=83ef05429593f208&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239050&hash=83ef05429593f208&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Елена -->
         <div id="interview-elena" class="interview-video hidden">
+
             <h2>Прямой эфир с Еленой Коноваловой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('elena')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('elena')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239051&hash=b047704a91fc021a&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239051&hash=b047704a91fc021a&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Андрей -->
         <div id="interview-andrey" class="interview-video hidden">
+
             <h2>Прямой эфир с Андреем Зеленским</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('andrey')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('andrey')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239052&hash=b99cc8c8a324e6fe&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Ольга -->
         <div id="interview-olga" class="interview-video hidden">
+
             <h2>Прямой эфир с Ольгой Баранцевой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('olga')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('olga')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239136&hash=e653150e642e85c1&hd=4"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239136&hash=e653150e642e85c1&hd=4"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Ирина -->
         <div id="interview-irina" class="interview-video hidden">
+
             <h2>Прямой эфир с Ириной Булыковой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('irina')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('irina')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239142&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239142&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Лилия 1 -->
         <div id="interview-lilia1" class="interview-video hidden">
+
             <h2>Интервью с Лилией Ветюговой (часть1)</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('lilia1')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('lilia1')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239199&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239199&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Лилия 2 -->
         <div id="interview-lilia2" class="interview-video hidden">
+
             <h2>Интервью с Лилией Ветюговой (часть2)</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('lilia2')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('lilia2')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239200&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239200&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Лилия 3 -->
         <div id="interview-lilia3" class="interview-video hidden">
+
             <h2>Интервью с Лилией Ветюговой (часть3)</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('lilia3')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('lilia3')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239203&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/clip_ext.php?oid=-232465473&id=456239203&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Команда -->
         <div id="interview-komanda" class="interview-video hidden">
+
             <h2>Интервью с участниками, экспертами, командой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('komanda')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('komanda')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239205&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239205&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Анна -->
         <div id="interview-ann" class="interview-video hidden">
-            <h2>Прямой эфир с Пошиваловой Анной</h2>
+
+            <h2>Интервью с Пошиваловой Анной</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('ann')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('ann')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть интервью
+                    </span>
+
                 </div>
-                <iframe data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239217&autoplay=1"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vk.com/video_ext.php?oid=-232465473&id=456239217&autoplay=1"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
 
+
+        <!-- Вебинар с Ириной -->
         <div id="interview-irina123" class="interview-video hidden">
+
             <h2>Вебинар с Ириной Булыковой</h2>
+
             <div class="video-container">
-                <div class="video-poster-overlay" onclick="startInterviewVideo('irina123')">
-                    <span class="video-poster-text">Коснитесь, чтобы смотреть интервью</span>
+
+                <div class="video-poster-overlay"
+                     onclick="startInterviewVideo('irina123')">
+
+                    <span class="video-poster-text">
+                        Коснитесь, чтобы смотреть видео
+                    </span>
+
                 </div>
-                <iframe data-src="https://vkvideo.ru/video_ext.php?oid=-232465473&id=456239230&hash=f4ab10184256e214&hd=3"
-                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                        frameborder="0" allowfullscreen></iframe>
+
+                <iframe
+                    data-src="https://vkvideo.ru/video_ext.php?oid=-232465473&id=456239230&hash=f4ab10184256e214&hd=3"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
             </div>
+
         </div>
+
     </section>
+
 </div>
+
+
+<!-- ==================== СТАТЬИ ==================== -->
+
+<!--
 <div id="articles" class="page">
     <h1>📄 Статьи</h1>
-    <div class="card-link">Как начать карьеру педагога</div>
+
+    <div class="card-link">
+        Как начать карьеру педагога
+    </div>
 </div>
+-->
+
+
+<!-- ==================== ИНСТРУМЕНТЫ ==================== -->
 
 <div id="tools" class="page">
+
     <h1>🛠️ Инструменты</h1>
-    <p>Полезные шаблоны и материалы для скачивания:</p>
-<div class="tools-grid">
-    <a href="https://disk.yandex.ru/i/fYm7Ww6avrF_xA" target="_blank" class="download-card">
+
+    <p>
+        Полезные шаблоны и материалы для скачивания:
+    </p>
+
+    <div class="tools-grid">
+
+        <a href="https://disk.yandex.ru/i/fYm7Ww6avrF_xA"
+           target="_blank"
+           class="download-card">
             📝 Шаблон резюме для педагога
         </a>
 
-        <a href="https://disk.yandex.ru/i/vSoDEeEjW0vgIg" target="_blank" class="download-card orange">
+
+        <a href="https://disk.yandex.ru/i/vSoDEeEjW0vgIg"
+           target="_blank"
+           class="download-card orange">
             💪 Руководство по преодолению эмоциональной нагрузки
         </a>
 
-        <a href="https://disk.yandex.ru/i/hA19YW0c5PxDBg" target="_blank" class="download-card">
-            📱 Полезные приложения и сервисы
-        </a>
 
-        <a href="https://disk.yandex.ru/i/lOfrw_v8aYB4Iw" target="_blank" class="download-card orange">
+        <a href="https://disk.yandex.ru/i/lOfrw_v8aYB4Iw"
+           target="_blank"
+           class="download-card orange">
             📈 Карьерные перспективы педагога
         </a>
 
-        <a href="https://disk.yandex.ru/i/UZ9TnYcqwP2ZKQ" target="_blank" class="download-card">
+
+        <a href="https://disk.yandex.ru/i/UZ9TnYcqwP2ZKQ"
+           target="_blank"
+           class="download-card">
             📈 Карьерные перспективы педагога 2.0
         </a>
 
-        <a href="https://disk.yandex.ru/i/qu67NPZEiXp1VQ" target="_blank" class="download-card orange">
+
+        <a href="https://disk.yandex.ru/i/qu67NPZEiXp1VQ"
+           target="_blank"
+           class="download-card orange">
             ✅ Чек-лист для самооценки навыков
         </a>
 
-        <a href="https://disk.yandex.ru/i/Tt55T2qyjE4m3w" target="_blank" class="download-card">
+
+        <a href="https://disk.yandex.ru/i/Tt55T2qyjE4m3w"
+           target="_blank"
+           class="download-card">
             ✅ Чек-лист для самооценки навыков 2.0
         </a>
+
     </div>
+
 </div>
+
+
+<!-- ==================== ПОДБОРКИ ==================== -->
 
 <div id="topics" class="page">
+
     <h1>🎯 Подборки</h1>
-    <p>Материалы по направлениям подготовки.</p>
+
+    <p>
+        Материалы по направлениям подготовки.
+    </p>
+
+    <a href="https://disk.yandex.ru/i/hA19YW0c5PxDBg"
+       target="_blank"
+       class="download-card">
+        📱 Полезные приложения и сервисы
+    </a>
+
 </div>
 
- <div id="presentations" class="page">
-     <div class="presentation-list">
-         <h1>📥 Скачать презентации</h1>
-         <p>Материалы доступны для скачивания.</p>
 
-    <a href="https://disk.yandex.ru/i/Ip88CWjHtEWKjQ" target="_blank" class="download-card">
-        📘 Скачать презентацию Михаила Коробейникова
-    </a>
+<!-- ==================== ПРЕЗЕНТАЦИИ ==================== -->
 
-    <a href="https://disk.yandex.ru/i/nnoElGjUUgsuPw" target="_blank" class="download-card orange">
-        🎯 Скачать презентацию Ольги Баранцевой
-    </a>
+<div id="presentations" class="page">
 
-    <a href="https://disk.yandex.ru/i/VhFjoAbdF0LoMQ" target="_blank" class="download-card">
-        📚 Скачать презентацию Андрея Зеленского
-    </a>
+    <div class="presentation-list">
 
-    <a href="https://disk.yandex.ru/i/n-mxLmJg8rq4tA" target="_blank" class="download-card">
-        📚 Скачать презентацию Ирины Булыковой
-    </a>
+        <h1>📥 Скачать презентации</h1>
+
+        <p>
+            Материалы доступны для скачивания.
+        </p>
+
+
+        <a href="https://disk.yandex.ru/i/Ip88CWjHtEWKjQ"
+           target="_blank"
+           class="download-card">
+
+            📘 Скачать презентацию Михаила Коробейникова
+
+        </a>
+
+
+        <a href="https://disk.yandex.ru/i/nnoElGjUUgsuPw"
+           target="_blank"
+           class="download-card orange">
+
+            🎯 Скачать презентацию Ольги Баранцевой
+
+        </a>
+
+
+        <a href="https://disk.yandex.ru/i/VhFjoAbdF0LoMQ"
+           target="_blank"
+           class="download-card">
+
+            📚 Скачать презентацию Андрея Зеленского
+
+        </a>
+
+
+        <a href="https://disk.yandex.ru/i/n-mxLmJg8rq4tA"
+           target="_blank"
+           class="download-card">
+
+            📚 Скачать презентацию Ирины Булыковой
+
+        </a>
+
+    </div>
+
 </div>
-     </div>
 
-    
+
+<!-- ==================== ОБРАТНАЯ СВЯЗЬ ==================== -->
+
 <div id="feedback" class="page">
+
     <h1>📩 Обратная связь</h1>
 
     <form id="feedbackForm">
-        <input type="text" id="name" placeholder="Ваше имя" required>
-        <input type="email" id="userEmail" placeholder="Ваш email" required>
-        <textarea id="message" placeholder="Ваше сообщение" required></textarea>
-        <button type="submit">Отправить</button>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Ваше имя"
+            required
+        >
+
+        <input
+            type="email"
+            id="userEmail"
+            placeholder="Ваш email"
+            required
+        >
+
+        <textarea
+            id="message"
+            placeholder="Ваше сообщение"
+            required>
+        </textarea>
+
+        <button type="submit">
+            Отправить
+        </button>
+
     </form>
 
     <p id="status"></p>
+
 </div>
 
 </main>
 
-<!-- Firebase SDK -->
+
+<!-- ==================== FIREBASE ==================== -->
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
 <script src="script.js"></script>
-    
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
